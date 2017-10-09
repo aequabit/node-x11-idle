@@ -1,0 +1,16 @@
+{
+  "name": "x11-idle",
+  "version": "1.0.0",
+  "description": "Module to get the user's idle time in X11.",
+  "main": "index.js",
+  "author": "aequabit",
+  "license": "MIT",
+  "gypfile": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aequabit/node-x11-idle.git"
+  },
+  "dependencies": {
+    "bindings": "~1.2.1"
+  }
+}
