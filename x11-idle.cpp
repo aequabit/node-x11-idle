@@ -7,31 +7,25 @@
 #include <X11/extensions/scrnsaver.h>
 
 int GetIdleTime () {
-    time_t idle_time;
-    static XScreenSaverInfo *mit_info;
-    Display *display;
-    int screen;
-    mit_info = XScreenSaverAllocInfo();
+  XScreenSaverInfo *mit_info = XScreenSaverAllocInfo();
 
-		display = XOpenDisplay(NULL);
-    if (display == NULL)
-			return -1;
+  Display* display = XOpenDisplay(NULL);
+  if (display == NULL)
+		return -1;
 
-    screen = DefaultScreen(display);
-    XScreenSaverQueryInfo(display, RootWindow(display, screen), mit_info);
+  int screen = DefaultScreen(display);
+  XScreenSaverQueryInfo(display, RootWindow(display, screen), mit_info);
 
-    idle_time = mit_info->idle / 1000;
+  time_t idle_time = mit_info->idle / 1000;
 
-    XFree(mit_info);
-    XCloseDisplay(display);
-    return idle_time;
+  XFree(mit_info);
+  XCloseDisplay(display);
+
+  return idle_time;
 }
 
 void IdleTime(const v8::FunctionCallbackInfo<v8::Value>& args) {
 	v8::Isolate* isolate = v8::Isolate::GetCurrent();
-	v8::HandleScope scope(isolate);
-
-	const unsigned argc = 0;
 
 	int idleTime = GetIdleTime();
 	if (idleTime == -1) {
