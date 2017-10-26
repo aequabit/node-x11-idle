@@ -2,19 +2,21 @@
 #include <time.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <memory>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/extensions/scrnsaver.h>
 
 int GetIdleTime () {
-  XScreenSaverInfo *mit_info = XScreenSaverAllocInfo();
+  XScreenSaverInfo* mit_info = XScreenSaverAllocInfo();
 
   Display* display = XOpenDisplay(NULL);
   if (display == NULL)
 		return -1;
 
   int screen = DefaultScreen(display);
-  XScreenSaverQueryInfo(display, RootWindow(display, screen), mit_info);
+  Drawable drawable = RootWindow(display, screen);
+  XScreenSaverQueryInfo(display, drawable, mit_info);
 
   time_t idle_time = mit_info->idle / 1000;
 
